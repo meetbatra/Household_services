@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/static/style_admin_prof.css">
+</head>
+<body>
+    <div class="nav">
+        <h1>HS</h1>
+        <div class="options">
+            <h3><a href="/customer/{{cust.id}}/home">Home</a></h3>
+            <h3><a href="/customer/{{cust.id}}/search">Search</a></h3>
+            <h3><a href="/">Logout</a></h3>
+        </div>
+        <div class="greet">
+            <h3>Welcome, {{cust.name}}</h3>
+        </div>
+    </div>
+    <div class="search">
+        <form action="/customer/{{cust.id}}/search" method="post">
+            <h3>Search for:</h3>
+            <input type="text" name="key">
+            <button type="submit">Search</button>
+        </form>
+        {% if var %}
+            {% if var=="book" %}
+            <div class="services">
+                <h2>Book Service</h2>
+                {% if packs | length==0 %}
+                    <div class="msg">
+                        <h3>No Results</h3>
+                    </div>
+                {% else %}
+                <table>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Service Name</th>
+                        <th>Description</th>
+                        <th>Price(INR)</th>
+                        <th>Time Required</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for service in packs %}
+                        <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{service.name}}</td>
+                            <td>{{service.description}}</td>
+                            <td>{{service.price}}</td>
+                            <td>{{service.time_reqd}}</td>
+                            <td class="btn">
+                                <a href="/{{cust.id}}/service/{{service.id}}"><button>Book</button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+            {% elif var=="past" %}
+            <div class="reqs">
+                <h2>Service History</h2>
+                {% if services|length==0 %}
+                    <div class="msg">
+                        <h3>No Past Requests</h3>
+                    </div>
+                {% else %}
+                <table>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Service ID</th>
+                        <th>Service Name</th>
+                        <th>Professional Name</th>
+                        <th>Professional Email</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for req,prof,service in services %}
+                    <tr>
+                        <td>{{req.id}}</td>
+                        <td>{{service.id}}</td>
+                        <td>{{service.name}}</td>
+                        {% if prof!="-" %}
+                        <td>{{prof.name}}</td>
+                        <td>{{prof.email}}</td>
+                        {% else %}
+                        <td>Nil</td>
+                        <td>Nil</td>
+                        {% endif %}
+                        <td class="btn">
+                            {% if req.status=="pending" %}
+                                <a href="/{{cust.id}}/close_service/{{req.id}}"><button>Close</button></a>
+                            {% elif req.status=="requested" %}
+                                Requested
+                            {% else %}
+                                Completed
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

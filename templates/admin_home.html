@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../static/style_admin_prof.css">
+</head>
+<body>
+    <div class="nav">
+        <h1>HS</h1>
+        <div class="options">
+            <h3><a href="/admin/home">Home</a></h3>
+            <h3><a href="/admin/search">Search</a></h3>
+            <h3><a href="/">Logout</a></h3>
+        </div>
+        <div class="greet">
+            <h3>Welcome, Admin</h3>
+        </div>
+    </div>
+    <div class="container">
+        <div class="services">
+            <h2>Services</h2>
+            {% if services | length==0 %}
+            <div class="msg">
+                <h3>No Services</h3>
+                <a href="/admin/createService"><button>+New Service</button></a>
+            </div>
+            {% else %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Time reqd.</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                {% for service in services %}
+                    <tr>
+                        <td>{{service.id}}</td>
+                        <td>{{service.name}}</td>
+                        <td>{{service.type}}</td>
+                        <td>{{service.price}}</td>
+                        <td>{{service.time_reqd}}</td>
+                        <td>{{service.description}}</td>
+                        <td class="btn">
+                            <a href="/admin/editService/{{service.id}}"><button>Edit</button></a>
+                            <a href="/admin/deleteService/{{service.id}}"><button>Delete</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="new">
+                <a href="/admin/createService"><button>+New Service</button></a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="prof">
+            <h2>Professionals</h2>
+            {% if profs | length==0 %}
+                <div class="msg">
+                    <h3>No Professionals</h3>
+                </div>
+            {% else %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Service Name</th>
+                    <th>Experience(yrs)</th>
+                    <th>Documents</th>
+                    <th>Address</th>
+                    <th>Pincode</th>
+                    <th>Action</th>
+                </tr>
+                {% for prof in profs %}
+                    <tr>
+                        <td>{{prof.id}}</td>
+                        <td>{{prof.name}}</td>
+                        <td>{{prof.email}}</td>
+                        <td>{{prof.service_name}}</td>
+                        <td>{{prof.experience}}</td>
+                        <td>
+                            <a href="/static/docs/{{prof.id}}.pdf" target="_blank"><button>View Docs</button></a>
+                        </td>
+                        <td>{{prof.address}}</td>
+                        <td>{{prof.pincode}}</td>
+                        <td class="btn">
+                            {% if prof.status =="Approved" %}
+                            <a href="/admin/blockProfessional/{{prof.id}}"><button>Block</button></a>
+                            {% elif prof.status == "Rejected" %}
+                            {{prof.status}}
+                            {% elif prof.status == "Blocked" %}
+                            {{prof.status}}
+                            {% else %}
+                            <a href="/admin/approveProfessional/{{prof.id}}"><button>Approve</button></a>
+                            <a href="/admin/rejectProfessional/{{prof.id}}"><button>Reject</button></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        <div class="req">
+            <h2>Service Requests</h2>
+            {% if reqs | length==0 %}
+                <div class="msg">
+                    <h3>No Requests</h3>
+                </div>
+            {% else %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Service ID</th>
+                    <th>Customer ID</th>
+                    <th>Professional ID</th>
+                    <th>Status</th>
+                </tr>
+                {% for req in reqs %}
+                    <tr>
+                        <td>{{req.id}}</td>
+                        <td>{{req.service_id}}</td>
+                        <td>{{req.cust_id}}</td>
+                        <td>{{req.prof_id}}</td>
+                        <td>{{req.status}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        <div class="customers">
+            <h2>Customers</h2>
+            {% if customers | length==0 %}
+                <div class="msg">
+                    <h3>No Customers</h3>
+                </div>
+            {% else %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Pincode</th>
+                    <th>Action</th>
+                </tr>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{customer.id}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.pincode}}</td>
+                        <td class="btn">
+                            {% if customer.status!="Blocked" %}
+                                <a href="/admin/blockCustomer/{{customer.id}}"><button>Block</button></a>
+                            {% else %}
+                                {{customer.status}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

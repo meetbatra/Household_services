@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/static/style_registerC.css">
+</head>
+<body>
+    <div class="heading">
+        <h1>Household Services</h1>
+    </div>
+    <div class="signup prof">
+        <h2>Professional Registration</h2>
+        <form action="/professional/register" method="post" enctype="multipart/form-data">
+            <div class="email">
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+            </div>
+            <div class="pass">
+                <label for="pass">Password:</label>
+                <input type="password" name="pass">
+            </div>
+            <div class="fname">
+                <label for="name">Full Name:</label>
+                <input type="text" name="name">
+            </div>
+            <div class="service">
+                <label for="services">Service Name:</label>
+                <select name="services">
+                    <option selected>Select a Service</option>
+                    {% for service in services %}
+                        <option value="{{service.id}}">{{service.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="exp">
+                <label for="exp">Experience(in yrs):</label>
+                <input type="number" name="exp">
+            </div>
+            <div class="docs">
+                <label for="docs">Attach Documents:</label>
+                <input type="file" name="docs">
+            </div>
+            <div class="add">
+                <label for="add">Address:</label>
+                <input type="text" name="add">
+            </div>
+            <div class="pincode">
+                <label for="pin">Pincode:</label>
+                <input type="text" name="pin">
+            </div>
+            <div class="register">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+        <div class="msg">
+            {% if var=="mail" %}
+            <p>Email is already in use</p>
+            {% elif var=="file" %}
+            <p>Upload PDF file only</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

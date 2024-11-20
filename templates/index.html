@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Household Services</title>
+    <link rel="stylesheet" href="../static/style_home.css">
+</head>
+<body>
+    <div class="heading">
+        <h1>Household Services</h1>
+    </div>
+    <div class="container">
+        <h2>Sign in</h2>
+        <form action="/" method="POST">
+            <div class="email">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="pass">
+                <label for="pass">Password</label>
+                <input type="password" name="pass" id="pass" placeholder="Enter your password">
+            </div>
+            <div class="user">
+                <input type="radio" name="user" value="customer">Customer
+                <input type="radio" name="user" value="professional">Professional
+            </div>
+            <div class="submit">
+                <button type="submit"><b>Submit</b></button>
+            </div>
+        </form>
+        <div class="options">
+            <a href="/customer/signup">Create account</a>
+            <a href="/professional/register">Register as a Professional</a>
+        </div>
+        <div class="msg">
+            {% if var=="w_pass" %}
+                <p>Incorrect Passwoord</p>
+            {% elif var=="register" %}
+                <p>Not Registered</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
