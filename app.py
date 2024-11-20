@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 aEmail="admin12@mail.com"
-aPass="admin123"
+aPass="admin12"
 service_types=[]
 
 class Service(db.Model):
