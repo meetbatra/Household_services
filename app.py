@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
+from flask_sqlalchemy import SQLAlchemy, or_
 
 current_dir = os.path.abspath(os.path.dirname( __file__ ))
 app = Flask(__name__)
