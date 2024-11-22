@@ -116,12 +116,20 @@ input{
     padding-left: 0.5rem;
 }
 
+.search h3{
+    color: #4A628A;
+}
+
 .msg{
     display: flex;
     width: 12rem;
     height: 1.5rem;
     padding-left: 1rem;
     justify-content: space-between;
+    color: red;
+}
+
+.msg h3{
     color: red;
 }
 
@@ -185,8 +193,4 @@ input{
 
 .categories div:hover{
     background-color: #CFEFF0;
-}
-
-.search h3{
-    color: #4A628A;
 }

@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy, or_
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 current_dir = os.path.abspath(os.path.dirname( __file__ ))
 app = Flask(__name__)
@@ -10,7 +11,6 @@ db = SQLAlchemy(app)
 
 aEmail="admin12@mail.com"
 aPass="admin123"
-service_types=[]
 
 class Service(db.Model):
     __tablename__= "services"
@@ -79,7 +79,7 @@ def sign_in():
             cust=Customer.query.filter_by(email=email).first()
             if(cust):
                 if(passw==cust.passw):
-                    return redirect(url_for('customer_home.html', id=cust.id))
+                    return redirect(url_for('customer_home', id=cust.id))
                 else:
                     var='w_pass'
                     return render_template('index.html', var=var)
@@ -141,7 +141,7 @@ def prof_register():
             return render_template('register_professional.html', services=services, var=var)
         
         service=Service.query.filter_by(id=service_id).first()
-        status='Approval pending'
+        status='Approval Pending'
         
         new_prof=Professional(id=2,email=email,passw=passw,name=name,
                               service_id=service.id,
@@ -186,9 +186,6 @@ def create_service():
         if(service):
             var=True
             return render_template('create_service.html',var=var)
-        
-        if(type not in service_types):
-            service_types.append(type)
         
         new_service=Service(id=2,name=name,type=type,price=price,time_reqd=time,description=desc)
         db.session.add(new_service)
@@ -485,7 +482,7 @@ def customer_search(cust_id):
     cust=Customer.query.filter_by(id=cust_id).first()
 
     if(request.method=='POST'):
-        var=request.form.get('db')
+        var=True
         key=request.form['key']
 
         services=Service.query.filter(
@@ -497,7 +494,7 @@ def customer_search(cust_id):
                 Service.description.ilike(f'%{key}%')
             )
         ).all()
-
+        
         return render_template('customer_search.html', cust=cust, packs=services, var=var)
 
     return render_template('customer_search.html', cust=cust)

@@ -20,87 +20,42 @@
     </div>
     <div class="search">
         <form action="/customer/{{cust.id}}/search" method="post">
-            <h3>Search for:</h3>
+            <h3>Search for service:</h3>
             <input type="text" name="key">
             <button type="submit">Search</button>
         </form>
         {% if var %}
-            {% if var=="book" %}
-            <div class="services">
-                <h2>Book Service</h2>
-                {% if packs | length==0 %}
-                    <div class="msg">
-                        <h3>No Results</h3>
-                    </div>
-                {% else %}
-                <table>
+        <div class="services">
+            {% if packs | length==0 %}
+                <div class="msg">
+                    <h3>No Results</h3>
+                </div>
+            {% else %}
+            <h2>Book Service</h2>
+            <table>
+                <tr>
+                    <th>S.No</th>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                    <th>Price(INR)</th>
+                    <th>Time Required</th>
+                    <th>Action</th>
+                </tr>
+                {% for service in packs %}
                     <tr>
-                        <th>S.No</th>
-                        <th>Service Name</th>
-                        <th>Description</th>
-                        <th>Price(INR)</th>
-                        <th>Time Required</th>
-                        <th>Action</th>
-                    </tr>
-                    {% for service in packs %}
-                        <tr>
-                            <td>{{loop.index}}</td>
-                            <td>{{service.name}}</td>
-                            <td>{{service.description}}</td>
-                            <td>{{service.price}}</td>
-                            <td>{{service.time_reqd}}</td>
-                            <td class="btn">
-                                <a href="/{{cust.id}}/service/{{service.id}}"><button>Book</button></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-                {% endif %}
-            </div>
-            {% elif var=="past" %}
-            <div class="reqs">
-                <h2>Service History</h2>
-                {% if services|length==0 %}
-                    <div class="msg">
-                        <h3>No Past Requests</h3>
-                    </div>
-                {% else %}
-                <table>
-                    <tr>
-                        <th>Request ID</th>
-                        <th>Service ID</th>
-                        <th>Service Name</th>
-                        <th>Professional Name</th>
-                        <th>Professional Email</th>
-                        <th>Status</th>
-                    </tr>
-                    {% for req,prof,service in services %}
-                    <tr>
-                        <td>{{req.id}}</td>
-                        <td>{{service.id}}</td>
+                        <td>{{loop.index}}</td>
                         <td>{{service.name}}</td>
-                        {% if prof!="-" %}
-                        <td>{{prof.name}}</td>
-                        <td>{{prof.email}}</td>
-                        {% else %}
-                        <td>Nil</td>
-                        <td>Nil</td>
-                        {% endif %}
+                        <td>{{service.description}}</td>
+                        <td>{{service.price}}</td>
+                        <td>{{service.time_reqd}}</td>
                         <td class="btn">
-                            {% if req.status=="pending" %}
-                                <a href="/{{cust.id}}/close_service/{{req.id}}"><button>Close</button></a>
-                            {% elif req.status=="requested" %}
-                                Requested
-                            {% else %}
-                                Completed
-                            {% endif %}
+                            <a href="/{{cust.id}}/service/{{service.id}}"><button>Book</button></a>
                         </td>
                     </tr>
-                    {% endfor %}
-                </table>
-                {% endif %}
-            </div>
+                {% endfor %}
+            </table>
             {% endif %}
+        </div>     
         {% endif %}
     </div>
 </body>
