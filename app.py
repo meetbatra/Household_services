@@ -51,6 +51,7 @@ class Service_Request(db.Model):
     cust_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
     prof_id = db.Column(db.Integer, db.ForeignKey('professionals.id'), nullable=False)
     status = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Integer, default=0)
 
 @app.route('/', methods=['GET','POST'])
 def sign_in():
@@ -458,15 +459,18 @@ def customer_service(id,service):
 
     return render_template('customer_home.html',cust=cust, services=services, packs=services_by_type, service=service.capitalize())
 
-@app.route('/<int:cust_id>/close_service/<int:req_id>')
-def close_service(cust_id,req_id):
+@app.route('/<string:user>/<int:user_id>/close_service/<int:req_id>')
+def close_service(user,user_id,req_id):
     req=Service_Request.query.filter_by(id=req_id).first()
     req.status='completed'
 
     db.session.add(req)
     db.session.commit()
 
-    return redirect(url_for('customer_home',id=cust_id))
+    if(user=='customer'):
+        return redirect(url_for('customer_home',id=user_id))
+    elif(user=='prof'):
+        return redirect(url_for('prof_home',id=user_id))
 
 @app.route('/<int:cust_id>/service/<int:service_id>')
 def book_service(cust_id, service_id):
@@ -476,6 +480,18 @@ def book_service(cust_id, service_id):
     db.session.commit()
 
     return redirect(url_for('customer_home',id=cust_id))
+
+@app.route('/<int:cust_id>/rate/<int:req_id>', methods=['GET','POST'])
+def rate_service(cust_id, req_id):
+    if(request.method=='POST'):
+        rating=request.form.get('rating')
+        req=Service_Request.query.filter_by(id=req_id).first()
+        req.rating=rating
+
+        db.session.add(req)
+        db.session.commit()
+
+        return redirect(url_for('customer_home', id=cust_id))
 
 @app.route('/customer/<int:cust_id>/search', methods=['GET','POST'])
 def customer_search(cust_id):

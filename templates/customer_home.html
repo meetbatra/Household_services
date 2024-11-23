@@ -41,7 +41,7 @@
                     <th>Service Name</th>
                     <th>Description</th>
                     <th>Price(INR)</th>
-                    <th>Time Required(hrs.)</th>
+                    <th>Time Required(hrs)</th>
                     <th>Action</th>
                 </tr>
                 {% for service in packs %}
@@ -92,6 +92,7 @@
                 <th>Service Name</th>
                 <th>Professional Name</th>
                 <th>Professional Email</th>
+                <th>Rating</th>
                 <th>Status</th>
             </tr>
             {% for req,prof,service in services %}
@@ -106,11 +107,26 @@
                 <td>Nil</td>
                 <td>Nil</td>
                 {% endif %}
+                <td>{{req.rating}}</td>
                 <td class="btn">
                     {% if req.status=="pending" %}
                         <a href="/{{cust.id}}/close_service/{{req.id}}"><button>Close</button></a>
                     {% elif req.status=="requested" %}
                         Requested
+                    {% elif req.rating==0 %}
+                        <div class="rating">
+                            <form action="/{{cust.id}}/rate/{{req.id}}" method="post">
+                                Rate:
+                               <select name="rating">
+                                   <option value=1>1</option>
+                                   <option value=2>2</option>
+                                   <option value=3>3</option>
+                                   <option value=4>4</option>
+                                   <option value=5>5</option>
+                               </select>
+                               <button type="submit">Submit</button>
+                           </form>
+                        </div>
                     {% else %}
                         Completed
                     {% endif %}

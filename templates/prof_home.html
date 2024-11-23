@@ -63,7 +63,7 @@
                         {% if req.status=="requested" %}
                             <a href="/prof/{{prof.id}}/acceptRequest/{{req.id}}"><button>Accept</button></a>
                         {% else %}
-                            Pending
+                            <a href="/prof/{{prof.id}}/close_service/{{req.id}}"><button>Close</button></a>
                         {% endif %}
                             
                         </td>
@@ -86,6 +86,7 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Pincode</th>
+                    <th>Rating</th>
                 </tr>
                 {% for req,cust in closed_reqs %}
                     <tr>
@@ -94,6 +95,7 @@
                         <td>{{cust.email}}</td>
                         <td>{{cust.address}}</td>
                         <td>{{cust.pincode}}</td>
+                        <td>{{req.rating}}</td>
                     </tr>
                 {% endfor %}
             </table>

@@ -32,8 +32,8 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Price</th>
-                    <th>Time reqd.</th>
+                    <th>Price(INR)</th>
+                    <th>Time reqd.(hrs)</th>
                     <th>Description</th>
                     <th>Action</th>
                 </tr>
@@ -118,6 +118,7 @@
                     <th>Service ID</th>
                     <th>Customer ID</th>
                     <th>Professional ID</th>
+                    <th>Rating</th>
                     <th>Status</th>
                 </tr>
                 {% for req in reqs %}
@@ -126,6 +127,7 @@
                         <td>{{req.service_id}}</td>
                         <td>{{req.cust_id}}</td>
                         <td>{{req.prof_id}}</td>
+                        <td>{{req.rating}}</td>
                         <td>{{req.status}}</td>
                     </tr>
                 {% endfor %}

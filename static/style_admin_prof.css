@@ -101,7 +101,7 @@ button:hover{
     width: 15rem;
 }
 
-form{
+.search form{
     margin-left: 1rem;
     margin-bottom: 1rem;
 }
@@ -193,4 +193,9 @@ input{
 
 .categories div:hover{
     background-color: #CFEFF0;
+}
+
+.rating select{
+    width: 4rem;
+    text-align: right;
 }
