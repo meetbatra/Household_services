@@ -14,7 +14,7 @@ aPass="admin123"
 
 class Service(db.Model):
     __tablename__= "services"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
     price = db.Column(db.String, nullable=False)
@@ -23,7 +23,7 @@ class Service(db.Model):
 
 class Professional(db.Model):
     __tablename__="professionals"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
     passw = db.Column(db.String, nullable=False)
@@ -46,7 +46,7 @@ class Customer(db.Model):
 
 class Service_Request(db.Model):
     __tablename__="service_requests"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
     cust_id = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
     prof_id = db.Column(db.Integer, db.ForeignKey('professionals.id'), nullable=False)
@@ -144,7 +144,7 @@ def prof_register():
         service=Service.query.filter_by(id=service_id).first()
         status='Approval Pending'
         
-        new_prof=Professional(id=2,email=email,passw=passw,name=name,
+        new_prof=Professional(email=email,passw=passw,name=name,
                               service_id=service.id,
                               service_name=service.name,
                               experience=exp,
@@ -188,7 +188,7 @@ def create_service():
             var=True
             return render_template('create_service.html',var=var)
         
-        new_service=Service(id=2,name=name,type=type,price=price,time_reqd=time,description=desc)
+        new_service=Service(name=name,type=type,price=price,time_reqd=time,description=desc)
         db.session.add(new_service)
         db.session.commit()
         
@@ -474,7 +474,7 @@ def close_service(user,user_id,req_id):
 
 @app.route('/<int:cust_id>/service/<int:service_id>')
 def book_service(cust_id, service_id):
-    req=Service_Request(id=2,service_id=service_id,cust_id=cust_id,status='requested')
+    req=Service_Request(service_id=service_id,cust_id=cust_id,status='requested')
 
     db.session.add(req)
     db.session.commit()
