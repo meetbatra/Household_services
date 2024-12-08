@@ -23,6 +23,14 @@
         <h1>Waiting for Approval</h1>
         <a href="/"><button>Go Back</button></a>
     </div>
+    {% elif prof.status=="Rejected"%}
+    <div class="heading">
+        <h1>Household Services</h1>
+    </div>
+    <div class="alert">
+        <h1>You are Rejected</h1>
+        <a href="/"><button>Go Back</button></a>
+    </div>
     {% else %}
     <div class="nav">
         <h1>HS</h1>

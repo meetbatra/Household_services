@@ -110,7 +110,7 @@
                 <td>{{req.rating}}</td>
                 <td class="btn">
                     {% if req.status=="pending" %}
-                        <a href="/{{cust.id}}/close_service/{{req.id}}"><button>Close</button></a>
+                        <a href="/customer/{{cust.id}}/close_service/{{req.id}}"><button>Close</button></a>
                     {% elif req.status=="requested" %}
                         Requested
                     {% elif req.rating==0 %}
